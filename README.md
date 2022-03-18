@@ -8,7 +8,7 @@ __This is a library of numerical optimization develop by mathematics student. If
 
 
 
-![book](C:\Users\dsy\Desktop\ML练习\dsy_numberical_optimization\numberical_optimization\book.jpg)
+![book](.\book.jpg)
 
 
 
@@ -87,7 +87,7 @@ Then, you should  instantiate your Optimizer with your target function.
 opt=Optimizer(tf)
 ```
 
-Then we can process our optimization(default: steepest_descent Method):
+ Now we can process our optimization(default: steepest_descent Method):
 
 ```
 x_min=opt.GD_optmize(start=tf.start_point())
