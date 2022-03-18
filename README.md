@@ -6,7 +6,7 @@
 
  
 
-**This is a library of numerical optimization develop by a mathematics student. If you are interest  in this project , welcome to sent your advice to my email:**  madsy@maid.scut.edu.cn.
+**This is a library of numerical optimization develop by a mathematic student. If you are interest  in this project , welcome to sent your advice to my email:**  madsy@maid.scut.edu.cn.
 
 ![book](https://github.com/Dsyforever/numberical_optimization/blob/main/book.jpg)
 
