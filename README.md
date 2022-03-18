@@ -2,11 +2,15 @@
 
 ## Welcome to dsy_numberical_optimization
 
-### Introduction
+### Introduction 
+
+ 
+
+**This is a library of numerical optimization develop by mathematics student. If you are interest  in this project , welcome to sent your advice to my email:**  madsy@maid.scut.edu.cn.
 
 ![book](https://github.com/Dsyforever/numberical_optimization/blob/main/book.jpg)
 
-__This is a library of numerical optimization develop by mathematics student. If you are interest  in this project , welcome to sent your advice to my email:  __madsy@maid.scut.edu.cn
+
 
 __To use this project, you need to define your own target function and optimizer with object "target_function" and "Optimizer".__
 
