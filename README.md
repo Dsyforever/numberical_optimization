@@ -4,17 +4,13 @@
 
 ### Introduction
 
-__This is a library of numerical optimization develop by mathematics student. If you are interest  in this project , welcome to sent your advice to my email:  __
-
-
-
 ![book](https://github.com/Dsyforever/numberical_optimization/blob/main/book.jpg)
 
-
+__This is a library of numerical optimization develop by mathematics student. If you are interest  in this project , welcome to sent your advice to my email:  __madsy@maid.scut.edu.cn
 
 __To use this project, you need to define your own target function and optimizer with object "target_function" and "Optimizer".__
 
-
+**Let's introduce some important class first:**
 
 |                  | __class target_function:__                                   |
 | ---------------- | ------------------------------------------------------------ |
@@ -46,7 +42,7 @@ __To use this project, you need to define your own target function and optimizer
 | --require_time:    | type:**bool**                                                |
 |                    | you can choose print the time spent in the entire optimization process. |
 
-
+About Optimizer, We will use Optimizer.GD_optmize()  frequently.
 
 |          | **Optimizer.GD_optmize():**                                  |
 | -------- | ------------------------------------------------------------ |
