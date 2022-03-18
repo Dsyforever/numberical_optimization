@@ -56,7 +56,7 @@ About Optimizer, We will use Optimizer.GD_optmize()  frequently.
 |          | (default="steepest_descent",option:"steepest_descent","linear_conjugate_gradient") |
 |          | input your optimization Method                               |
 | --A      | type:**numpy.mat**                                           |
-|          | (optional,default=(lambda x: 0))                             |
+|          | (optional,default=np.mat([]))                                |
 |          | **ps:**Only when you use Method  "linear_conjugate_gradient",you need to Input A. |
 |          | A is from funtion form like (0.5x^T *A*x-b^T*x)              |
 
