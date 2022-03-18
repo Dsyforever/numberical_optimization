@@ -1,4 +1,4 @@
-# ReadMe
+# README
 
 ## Welcome to dsy_numberical_optimization
 
