@@ -4,11 +4,11 @@
 
 ### Introduction
 
-__This is a library of numerical optimization develop by mathematics student. If you are interest  in this project , welcome to sent your advice to my email:  __ madsy@mail.scut.edu.cn
+__This is a library of numerical optimization develop by mathematics student. If you are interest  in this project , welcome to sent your advice to my email:  __
 
 
 
-![book](.\book.jpg)
+![book](https://github.com/Dsyforever/numberical_optimization/blob/main/book.jpg)
 
 
 
