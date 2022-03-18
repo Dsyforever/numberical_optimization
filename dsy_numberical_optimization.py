@@ -55,18 +55,18 @@ class line_search args:
 
 
 
-class target_funtion:
-    def __init__(self,dimension,funtion,grad_operator,Hermite= lambda x:0):
+class target_function:
+    def __init__(self,dimension,function,grad_operator,Hessian= lambda x:0):
         self.dimension=dimension
-        self.funtion=funtion
+        self.function=function
         self.grad_operator=grad_operator
-        self.Hermite=Hermite
+        self.Hessian=Hessian
     def get_value(self,x):
-        return self.funtion(x)
+        return self.function(x)
     def get_grad(self,x):
         return self.grad_operator(x)
-    def get_Hermite(self,x):
-        return self.Hermite(x)
+    def get_Hessian(self,x):
+        return self.Hessian(x)
     def start_point(self):
         rs = np.random.RandomState(1008)
         sp=np.mat(rs.rand(self.dimension[0],self.dimension[1]))
@@ -74,8 +74,8 @@ class target_funtion:
 
 
 class Optimizer:
-    def __init__(self,target_funtion,Interpolate="bisection",alpha_logs=False,steps_logs=False,Gly_logs=False,require_time=True,error_end=1e-6):
-        self.tf=target_funtion
+    def __init__(self,target_function,Interpolate="bisection",alpha_logs=False,steps_logs=False,Gly_logs=False,require_time=True,error_end=1e-6):
+        self.tf=target_function
         self.Interpolate=Interpolate
         self.error_end=error_end
         self.alpha_logs=alpha_logs

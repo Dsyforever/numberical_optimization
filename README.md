@@ -24,9 +24,9 @@ __To use this project, you need to define your own target function and optimizer
 |                  | input your own target funtion which all computational process must base on numpy.mat. |
 | --grad_operator: | type:**function**                                            |
 |                  | input your own target funtion's grad-operator  which all computational process must base on numpy.mat. |
-| --Hermite:       | type:**function**                                            |
+| --Hessian:       | type:**function**                                            |
 |                  | (optional,default=(lambda x: 0))                             |
-|                  | input your own target function's Hermite-operator  which all computational process must base on numpy.mat. |
+|                  | input your own target function's Hessian-operator  which all computational process must base on numpy.mat. |
 
 
 
