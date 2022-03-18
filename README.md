@@ -84,6 +84,7 @@ tf=target_funtion([1,3],f,deri_f)
 Then, you should  instantiate your Optimizer with your target function.
 
 ```python
+from dsy_numberical_optimization import Optimizer
 opt=Optimizer(tf)
 ```
 
