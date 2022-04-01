@@ -53,7 +53,7 @@ About Optimizer, We will use Optimizer.GD_optmize()  frequently.
 | --start: | type:**numpy.mat**                                           |
 |          | input your start point                                       |
 | --Method | type:**str**                                                 |
-|          | (default="steepest_descent",option:"steepest_descent","linear_conjugate_gradient") |
+|          | (default="steepest_descent",<br />option:"steepest_descent","linear_conjugate_gradient", "FR_conjugate_gradient","PR_conjugate_gradient","HR_conjugate_gradient"s) |
 |          | input your optimization Method                               |
 | --A      | type:**numpy.mat**                                           |
 |          | (optional,default=np.mat([]))                                |
