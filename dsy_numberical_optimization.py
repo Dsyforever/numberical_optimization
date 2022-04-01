@@ -85,18 +85,31 @@ class Optimizer:
     def GD_optmize(self,start,Method="steepest_descent",A=np.mat([])):
         x=start
         if Method=="steepest_descent":
+            print("Method: steepest_descent")
             ls=line_search(self.tf,self.Interpolate,self.alpha_logs)
         if Method=="linear_conjugate_gradient":
+            print("Method: linear_conjugate_gradient")
             print("waring: this method can only optmize funtion form like (0.5x.T*A*x-b.T*x)")
+        if Method=="FR_conjugate_gradient":
+            print("Method: FR_conjugate_gradient")
+            ls=line_search(self.tf,self.Interpolate,self.alpha_logs)
+        if Method=="PR_conjugate_gradient":
+            print("Method: PR_conjugate_gradient")
+            ls=line_search(self.tf,self.Interpolate,self.alpha_logs)
+        if Method=="HR_conjugate_gradient":
+            print("Method: HR_conjugate_gradient")
+            ls=line_search(self.tf,self.Interpolate,self.alpha_logs) 
         begin=time.time()
         x_his=[]
         fy_his=[]
         for i in range(10000):
             x_his.append(i)
             fy_his.append(float(self.tf.get_value(x)))
+            #########################################
             if Method=="steepest_descent":
                 p=-self.tf.get_grad(x)
-                a=ls.search(x,p) 
+                a=ls.search(x,p)  
+            ########################################
             if Method=="linear_conjugate_gradient":
                 if i==0:
                     r=self.tf.get_grad(x)
@@ -107,9 +120,47 @@ class Optimizer:
                     p=-r_next+beta*p
                     r=r_next
                 a=float(r.T*r)/float(p.T*A*p)
-            if(LA.norm(a*p,2)<self.error_end):break
+            ##############################################
+            if Method=="FR_conjugate_gradient":
+                if i==0:
+                    p=-self.tf.get_grad(x)
+                    a=ls.search(x,p)
+                    x_pre=x
+                else:
+                    beta=float(self.tf.get_grad(x).T*self.tf.get_grad(x))/float(self.tf.get_grad(x_pre).T*self.tf.get_grad(x_pre))
+                    p=-self.tf.get_grad(x)+beta*p
+                    a=ls.search(x,p)
+                    x_pre=x
+            ##############################################
+            if Method=="PR_conjugate_gradient":
+                if i==0:
+                    p=-self.tf.get_grad(x)
+                    a=ls.search(x,p)
+                    x_pre=x
+                else:
+                    beta=float(self.tf.get_grad(x).T*(self.tf.get_grad(x)-self.tf.get_grad(x_pre)))/float(self.tf.get_grad(x_pre).T*self.tf.get_grad(x_pre))
+                    if beta<0:beta=0
+                    p=-self.tf.get_grad(x)+beta*p
+                    a=ls.search(x,p)
+                    x_pre=x
+            ################################################
+            if Method=="HR_conjugate_gradient":
+                if i==0:
+                    p=-self.tf.get_grad(x)
+                    a=ls.search(x,p)
+                    x_pre=x
+                else:
+                    beta=float(self.tf.get_grad(x).T*(self.tf.get_grad(x)-self.tf.get_grad(x_pre)))/float((self.tf.get_grad(x)-self.tf.get_grad(x_pre)).T*p)
+                    if beta<0:beta=0
+                    p=-self.tf.get_grad(x)+beta*p
+                    a=ls.search(x,p)
+                    x_pre=x
+                
             x=x+a*p
-            if self.steps_logs==True:print("{index}th step funtion value:{value}".format(index=i,value=self.tf.get_value(x)))
+            if self.steps_logs==True:
+                print("{index}th step funtion value:{value} ,x is".format(index=i,value=self.tf.get_value(x)))
+                print(x)
+            if(LA.norm(self.tf.get_grad(x),2)<self.error_end):break
             if i>9998: print("out of computing capacity")
         end=time.time()
         if self.steps_logs==True or self.require_time==True:
@@ -155,7 +206,7 @@ class line_search:
                    
             if i>200 :print("zoom error ")        
     def search(self,x,p):
-        a=0.6
+        a=0.9
         a_pre=self.a_pre=0
         for i in range(205):
             if((self.values(x,p,a)>self.values(x,p,0)+self.c1*a*self.derivative(x,p,0)) or 
