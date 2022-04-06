@@ -74,7 +74,7 @@ class target_function:
 
 
 class Optimizer:
-    def __init__(self,target_function,Interpolate="bisection",alpha_logs=False,steps_logs=False,Gly_logs=False,require_time=True,error_end=1e-6):
+    def __init__(self,target_function,Interpolate="bisection",alpha_logs=True,steps_logs=True,Gly_logs=False,require_time=True,error_end=1e-8,constant_alpha=(False,1e-4)):
         self.tf=target_function
         self.Interpolate=Interpolate
         self.error_end=error_end
@@ -82,6 +82,7 @@ class Optimizer:
         self.steps_logs=steps_logs
         self.require_time=require_time
         self.Gly_logs=Gly_logs
+        self.ca=constant_alpha
     def GD_optmize(self,start,Method="steepest_descent",A=np.mat([])):
         x=start
         if Method=="steepest_descent":
@@ -92,23 +93,27 @@ class Optimizer:
             print("waring: this method can only optmize funtion form like (0.5x.T*A*x-b.T*x)")
         if Method=="FR_conjugate_gradient":
             print("Method: FR_conjugate_gradient")
-            ls=line_search(self.tf,self.Interpolate,self.alpha_logs)
+            ls=line_search(self.tf,self.Interpolate,self.alpha_logs,c2=0.1)
         if Method=="PR_conjugate_gradient":
             print("Method: PR_conjugate_gradient")
-            ls=line_search(self.tf,self.Interpolate,self.alpha_logs)
+            ls=line_search(self.tf,self.Interpolate,self.alpha_logs,c2=0.1)
         if Method=="HR_conjugate_gradient":
             print("Method: HR_conjugate_gradient")
-            ls=line_search(self.tf,self.Interpolate,self.alpha_logs) 
+            ls=line_search(self.tf,self.Interpolate,self.alpha_logs,c2=0.1) 
         begin=time.time()
         x_his=[]
         fy_his=[]
-        for i in range(10000):
+        for i in range(10000000000000):
             x_his.append(i)
             fy_his.append(float(self.tf.get_value(x)))
             #########################################
             if Method=="steepest_descent":
                 p=-self.tf.get_grad(x)
-                a=ls.search(x,p)  
+                if self.ca[0]==True:
+                    a=self.ca[1]*(2)**(-(i//1000))
+                    print("steplength={key}".format(key=a))
+                else:
+                    a=ls.search(x,p)  
             ########################################
             if Method=="linear_conjugate_gradient":
                 if i==0:
@@ -154,14 +159,13 @@ class Optimizer:
                     if beta<0:beta=0
                     p=-self.tf.get_grad(x)+beta*p
                     a=ls.search(x,p)
-                    x_pre=x
-                
+                    x_pre=x    
             x=x+a*p
             if self.steps_logs==True:
                 print("{index}th step funtion value:{value} ,x is".format(index=i,value=self.tf.get_value(x)))
                 print(x)
-            if(LA.norm(self.tf.get_grad(x),2)<self.error_end):break
-            if i>9998: print("out of computing capacity")
+            if(a*LA.norm(self.tf.get_grad(x),2)<self.error_end):break
+            if i>999888888: print("out of computing capacity")
         end=time.time()
         if self.steps_logs==True or self.require_time==True:
             print("whole optmization take {time}s".format(time=end-begin))
@@ -206,9 +210,9 @@ class line_search:
                    
             if i>200 :print("zoom error ")        
     def search(self,x,p):
-        a=0.9
+        a=1
         a_pre=self.a_pre=0
-        for i in range(205):
+        for i in range(20000000000005):
             if((self.values(x,p,a)>self.values(x,p,0)+self.c1*a*self.derivative(x,p,0)) or 
                (i>1 and self.values(x,p,a)>=self.values(x,p,a_pre))) :
                 a=self.zoom(a_pre,a,x,p)
