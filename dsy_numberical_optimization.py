@@ -74,7 +74,7 @@ class target_function:
 
 
 class Optimizer:
-    def __init__(self,target_function,Interpolate="bisection",alpha_logs=True,steps_logs=True,Gly_logs=False,require_time=True,error_end=1e-8,constant_alpha=(False,1e-4)):
+    def __init__(self,target_function,Interpolate="bisection",alpha_logs=False,steps_logs=False,Gly_logs=False,require_time=True,error_end=1e-8,constant_alpha=(False,1e-4)):
         self.tf=target_function
         self.Interpolate=Interpolate
         self.error_end=error_end
