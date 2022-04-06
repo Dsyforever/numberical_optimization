@@ -111,7 +111,7 @@ class Optimizer:
                 p=-self.tf.get_grad(x)
                 if self.ca[0]==True:
                     a=self.ca[1]*(2)**(-(i//1000))
-                    print("steplength={key}".format(key=a))
+                    # print("steplength={key}".format(key=a))
                 else:
                     a=ls.search(x,p)  
             ########################################
