@@ -74,7 +74,7 @@ class target_function:
 
 
 class Optimizer:
-    def __init__(self,target_function,Interpolate="bisection",alpha_logs=False,steps_logs=False,Gly_logs=False,require_time=True,error_end=1e-8,constant_alpha=(False,1e-4)):
+    def __init__(self,target_function,Interpolate="bisection",alpha_logs=False,steps_logs=False,Gly_logs=False,require_time=True,error_end=1e-6,constant_alpha=(False,1e-4)):
         self.tf=target_function
         self.Interpolate=Interpolate
         self.error_end=error_end
@@ -110,7 +110,7 @@ class Optimizer:
             if Method=="steepest_descent":
                 p=-self.tf.get_grad(x)
                 if self.ca[0]==True:
-                    a=self.ca[1]*(2)**(-(i//1000))
+                    a=self.ca[1]*(2)**(-(i//20000))
                     # print("steplength={key}".format(key=a))
                 else:
                     a=ls.search(x,p)  
@@ -164,7 +164,7 @@ class Optimizer:
             if self.steps_logs==True:
                 print("{index}th step funtion value:{value} ,x is".format(index=i,value=self.tf.get_value(x)))
                 print(x)
-            if(a*LA.norm(self.tf.get_grad(x),2)<self.error_end):break
+            if(LA.norm(self.tf.get_grad(x),2)<self.error_end):break
             if i>999888888: print("out of computing capacity")
         end=time.time()
         if self.steps_logs==True or self.require_time==True:
