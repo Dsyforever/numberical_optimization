@@ -90,14 +90,14 @@ opt=Optimizer(tf)
 
  Now we can process our optimization(default: steepest_descent Method):
 
-```
+```python
 x_min=opt.GD_optmize(start=tf.start_point())
 print("optmal x:\n{x}".format(x=x_min))
 ```
 
 result:
 
-```
+```python
 Method: steepest_descent
 whole optmization take 0.010001420974731445s
 optmal x:
@@ -110,14 +110,14 @@ optmal x:
 
 Example for Method "linear_conjugate_gradient"
 
-```
+```python
 x_min=opt.GD_optmize(start=tf.start_point(),A=A,Method="linear_conjugate_gradient")
 print("optmal x:\n{x}".format(x=x_min))
 ```
 
 result:
 
-```
+```python
 Method: linear_conjugate_gradient
 waring: this method can only optmize funtion form like (0.5x.T*A*x-b.T*x)
 whole optmization take 0.0010037422180175781s
@@ -129,14 +129,14 @@ optmal x:
 
 Example for Method "FR_conjugate_gradient"
 
-```
+```python
 x_min=opt.GD_optmize(start=tf.start_point(),A=A,Method="FR_conjugate_gradient")
 print("optmal x:\n{x}".format(x=x_min))
 ```
 
 result:
 
-```
+```python
 Method: FR_conjugate_gradient
 whole optmization take 0.039859771728515625s
 optmal x:
@@ -147,14 +147,14 @@ optmal x:
 
 Example for Method "PR_conjugate_gradient"
 
-```
+```python
 x_min=opt.GD_optmize(start=tf.start_point(),A=A,Method="PR_conjugate_gradient")
 print("optmal x:\n{x}".format(x=x_min))
 ```
 
 result:
 
-```
+```python
 Method: PR_conjugate_gradient
 whole optmization take 0.02293872833251953s
 optmal x:
@@ -165,7 +165,7 @@ optmal x:
 
 Example for Method "HR_conjugate_gradient"
 
-```
+```python
 x_min=opt.GD_optmize(start=tf.start_point(),A=A,Method="HR_conjugate_gradient")
 print("optmal x:\n{x}".format(x=x_min))
 ```
