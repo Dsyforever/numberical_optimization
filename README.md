@@ -53,7 +53,7 @@ About Optimizer, We will use Optimizer.GD_optmize()  frequently.
 | --start: | type:**numpy.mat**                                           |
 |          | input your start point                                       |
 | --Method | type:**str**                                                 |
-|          | (default="steepest_descent",<br />option:"steepest_descent","linear_conjugate_gradient", "FR_conjugate_gradient","PR_conjugate_gradient","HR_conjugate_gradient"s) |
+|          | (default="steepest_descent",<br />option:"steepest_descent","linear_conjugate_gradient", "FR_conjugate_gradient","PR_conjugate_gradient","HR_conjugate_gradient","SR1","DFP","BFGS","LS_Newton_CG") |
 |          | input your optimization Method                               |
 | --A      | type:**numpy.mat**                                           |
 |          | (optional,default=np.mat([]))                                |
@@ -172,12 +172,84 @@ print("optmal x:\n{x}".format(x=x_min))
 
 result:
 
-```
+```python
 Method: HR_conjugate_gradient
 whole optmization take 0.024933576583862305s
 optmal x:
 [[2.        ]
  [0.33333352]
  [0.99999993]]
+```
+
+Example for Method "SR1"
+
+```python
+x_min=opt.GD_optmize(start=tf.start_point(),A=A,Method="SR1")
+print("optmal x:\n{x}".format(x=x_min))
+```
+
+result:
+
+```python
+Method: SR1
+whole optmization take 0.0010035037994384766s
+optmal x:
+[[2.        ]
+ [0.33333333]
+ [1.        ]]
+```
+
+Example for Method "DFP"
+
+```python
+x_min=opt.GD_optmize(start=tf.start_point(),A=A,Method="DFP")
+print("optmal x:\n{x}".format(x=x_min))
+```
+
+result:
+
+```python
+Method: DFP
+whole optmization take 0.002991914749145508s
+optmal x:
+[[2.        ]
+ [0.33333333]
+ [1.        ]]
+```
+
+Example for Method "BFGS"
+
+```python
+x_min=opt.GD_optmize(start=tf.start_point(),A=A,Method="BFGS")
+print("optmal x:\n{x}".format(x=x_min))
+```
+
+result:
+
+```python
+Method: BFGS
+whole optmization take 0.00395512580871582s
+optmal x:
+[[2.        ]
+ [0.33333334]
+ [1.        ]]
+```
+
+Example for Method "HR_conjugate_gradient"
+
+```python
+x_min=opt.GD_optmize(start=tf.start_point(),A=A,Method="LS_Newton_CG")
+print("optmal x:\n{x}".format(x=x_min))
+```
+
+result:
+
+```python
+Method: LS_Newton_CG
+whole optmization take 0.01695394515991211s
+optmal x:
+[[1.99999971]
+ [0.33333333]
+ [0.99999986]]
 ```
 

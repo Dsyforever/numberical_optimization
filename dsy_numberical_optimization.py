@@ -100,6 +100,16 @@ class Optimizer:
         if Method=="HR_conjugate_gradient":
             print("Method: HR_conjugate_gradient")
             ls=line_search(self.tf,self.Interpolate,self.alpha_logs,c2=0.1) 
+        if Method=="SR1":
+            print("Method: SR1")
+        if Method=="DFP":
+            print("Method: DFP")
+        if Method=="BFGS":
+            print("Method: BFGS")
+        if Method=="LS_Newton_CG":
+            print("Method: LS_Newton_CG")
+            ls=line_search(self.tf,self.Interpolate,self.alpha_logs,c2=0.1)
+
         begin=time.time()
         x_his=[]
         fy_his=[]
@@ -159,7 +169,67 @@ class Optimizer:
                     if beta<0:beta=0
                     p=-self.tf.get_grad(x)+beta*p
                     a=ls.search(x,p)
-                    x_pre=x    
+                    x_pre=x
+            ####################################################
+            if Method=="SR1":
+                if i==0:
+                    diag=np.ones(x.shape[0])
+                    H_pre=np.mat(np.diag(diag))
+                    a=H_pre
+                    p=-self.tf.get_grad(x)
+                    x_pre=x
+                else:
+                    s_k=x-x_pre
+                    y_k=self.tf.get_grad(x)-self.tf.get_grad(x_pre)
+                    H=H_pre+((s_k-H_pre*y_k)*(s_k-H_pre*y_k).T)/((s_k-H_pre*y_k).T*y_k)
+                    a=H
+                    p=-self.tf.get_grad(x)
+                    H_pre=H
+                    x_pre=x
+            #####################################################
+            if Method=="DFP":
+                  if i==0:
+                      diag=np.ones(x.shape[0])
+                      H_pre=np.mat(np.diag(diag))
+                      a=H_pre
+                      p=-self.tf.get_grad(x)
+                      x_pre=x
+                  else:
+                      s_k=x-x_pre
+                      y_k=self.tf.get_grad(x)-self.tf.get_grad(x_pre)
+                      H=H_pre+((s_k*s_k.T)/(s_k.T*y_k))-(H_pre*y_k*y_k.T*H_pre)/(y_k.T*H_pre*y_k)
+                      a=H
+                      p=-self.tf.get_grad(x)
+                      H_pre=H
+                      x_pre=x 
+            ##########################################################
+            if Method=="BFGS":
+                  if i==0:
+                      diag=np.ones(x.shape[0])
+                      H_pre=np.mat(np.diag(diag))
+                      a=H_pre
+                      p=-self.tf.get_grad(x)
+                      x_pre=x
+                  else:
+                      s_k=x-x_pre
+                      y_k=self.tf.get_grad(x)-self.tf.get_grad(x_pre)
+                      H=H_pre+(float(1+((y_k.T*H_pre*y_k)/(s_k.T*y_k)))*((s_k*s_k.T)/(s_k.T*y_k)))-((s_k*y_k.T*H_pre+H_pre*y_k*s_k.T)/(s_k.T*y_k))
+                      a=H
+                      p=-self.tf.get_grad(x)
+                      H_pre=H
+                      x_pre=x  
+             ######################################
+            if Method=="LS_Newton_CG":
+                z=0
+                r=self.tf.get_grad(x)
+                d=-r
+                B=self.tf.Hessian(x)
+                erro=min([0.5,LA.norm(r,2)])*LA.norm(r,2)
+                p=Newton_CG_stepsearch(z,r,d,B,erro)
+                a=ls.search(x,p)
+                
+                     
+         
             x=x+a*p
             if self.steps_logs==True:
                 print("{index}th step funtion value:{value} ,x is".format(index=i,value=self.tf.get_value(x)))
@@ -238,7 +308,23 @@ def quadratic(a_l,a_h,tf,x,p):
     a=float(a)
     return a
             
-            
+def Newton_CG_stepsearch(z,r_pre,d,B,error):
+    for i in range(1000):
+        if d.T*B*d <=0:
+            if i==0:
+                return d
+            else:
+                return z
+        a=float(r_pre.T*r_pre/(d.T*B*d))
+        z=z+a*d
+        r=r_pre+a*B*d
+        if LA.norm(r,2)<error:
+            return z
+        beta=float(r.T*r/(r_pre.T*r_pre))
+        d=-r+beta*d
+        r_pre=r
+        if i>900:
+            print("step error")
             
                 
 
