@@ -8,7 +8,7 @@
 
 **This is a library of numerical optimization developed by a mathematic student. If you are interested  in this project, welcome to send your advice to my email:**  madsy@mail.scut.edu.cn.
 
-![book](https://github.com/Dsyforever/numberical_optimization/blob/main/book.jpg)
+![book](./book.jpg)
 
 
 
